@@ -1,0 +1,8 @@
+build
+out
+.cache
+.idea
+.vs
+
+dependencies/SFML
+build/
