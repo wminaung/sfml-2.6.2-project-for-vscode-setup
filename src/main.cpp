@@ -17,8 +17,8 @@ int main() {
   // vsync on // not a good way to do it
   // but we should use combination with delta time
   // delta time is the time between two frames
-  // window.setVerticalSyncEnabled(true);
-  window.setFramerateLimit(360);
+  window.setVerticalSyncEnabled(true);
+  // window.setFramerateLimit(360);
   //------------ Initialize ------------
 
   sf::Text frameReteText;
@@ -50,9 +50,11 @@ int main() {
         window.close();
       }
     }
+    sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
+
     double deltaTime = time.asMicroseconds() / 1000.0;
     frameRate.Update(deltaTime);
-    player.Update(deltaTime, skeleton);
+    player.Update(deltaTime, skeleton, mousePosition);
     skeleton.Update(deltaTime);
 
     /* --------- UPDATE --------- */

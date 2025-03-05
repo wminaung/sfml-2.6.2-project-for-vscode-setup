@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/Users/qung/Desktop/stm/dependencies/SFML/include"
+                "C:/Users/qung/Desktop/stm/cmake-sfml-project/dependencies/SFML/include"
             ],
             "defines": [
                 "_DEBUG",
@@ -13,8 +13,8 @@
             ],
             "windowsSdkVersion": "10.0.22000.0",
             "compilerPath": "C:/mingw64/bin/g++.exe",
-            "cStandard": "c17",
-            "cppStandard": "c++17",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
             "intelliSenseMode": "windows-gcc-x64"
         }
     ],

@@ -8,8 +8,11 @@ class Player {
 private:
   sf::Texture texture;
   std::vector<sf::RectangleShape> bullets;
-  float bulletSpeed = 1.f;
-  float playerSpeed = 1.f;
+  float bulletSpeed;
+  float maxFireRate;
+  float fireRateTimer;
+
+  float playerSpeed;
   sf::Vector2f scale;
   float defaultImgSize = 65;
   sf::Vector2f size;
@@ -17,6 +20,9 @@ private:
 
 public:
   sf::Sprite sprite;
+
+  Player();
+  ~Player();
   /*
    *  called per app start
    */
@@ -29,7 +35,7 @@ public:
   /*
    *  once per frame
    */
-  void Update(float deltaTime, Skeleton &skeleton);
+  void Update(float deltaTime, Skeleton &skeleton, sf::Vector2f &mousePosition);
   /*
    *  once per frame
    */

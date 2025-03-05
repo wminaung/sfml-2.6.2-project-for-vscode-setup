@@ -2,8 +2,15 @@
 #include "Math.h"
 #include <iostream>
 
+Player::Player()
+    : bulletSpeed(0.5f), playerSpeed(1.0f), maxFireRate(150.f),
+      fireRateTimer(0.f) {}
+
+Player::~Player() {}
+
 void Player::Initialize() {
   bullets.reserve(100);
+
   scale = sf::Vector2f(2.f, 2.f);
   size = sf::Vector2f(defaultImgSize, defaultImgSize);
 
@@ -31,7 +38,8 @@ void Player::Load() {
   }
 }
 
-void Player::Update(float deltaTime, Skeleton &skeleton) {
+void Player::Update(float deltaTime, Skeleton &skeleton,
+                    sf::Vector2f &mousePosition) {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
     sf::Vector2f postion = sprite.getPosition();
     sprite.setPosition(postion + sf::Vector2f(1, 0) * playerSpeed * deltaTime);
@@ -48,26 +56,35 @@ void Player::Update(float deltaTime, Skeleton &skeleton) {
     sf::Vector2f postion = sprite.getPosition();
     sprite.setPosition(postion + sf::Vector2f(0, -1) * playerSpeed * deltaTime);
   }
-  if (sf::Mouse::isButtonPressed(sf::Mouse::Left) ||
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+
+  //-----------------FIRE BULLETS----------------------
+
+  fireRateTimer += deltaTime;
+
+  if ((sf::Mouse::isButtonPressed(sf::Mouse::Left) ||
+       sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) &&
+      fireRateTimer >= maxFireRate) {
     bullets.push_back(sf::RectangleShape(sf::Vector2f(40, 20)));
     bullets[bullets.size() - 1].setPosition(sprite.getPosition());
+    fireRateTimer = 0.f;
   }
 
-  for (size_t i = 0; i < bullets.size(); i++) {
-    // move bullet
-    sf::Vector2f bulletDirection =
-        skeleton.sprite.getPosition() - bullets[i].getPosition();
-    bulletDirection = Math::NormalizeVector(bulletDirection);
-    bullets[i].setPosition(bullets[i].getPosition() +
-                           bulletDirection * bulletSpeed * deltaTime);
-
-    // check bullet collision
-    if (Math::DidRectCollide(bullets[i].getGlobalBounds(),
-                             skeleton.sprite.getGlobalBounds())) {
-      bullets.erase(bullets.begin() + i);
+  for (size_t i = bullets.size(); i-- > 0;) { // Start from the last element
+    // Move bullet
+    if (skeleton.health > 0) {
+      sf::Vector2f bulletDirection =
+          sf::Vector2f(mousePosition) - bullets[i].getPosition();
+      bulletDirection = Math::NormalizeVector(bulletDirection);
+      bullets[i].setPosition(bullets[i].getPosition() +
+                             bulletDirection * bulletSpeed * deltaTime);
+      if (Math::DidRectCollide(bullets[i].getGlobalBounds(),
+                               skeleton.sprite.getGlobalBounds())) {
+        bullets.erase(bullets.begin() + i); // Remove the bullet
+        skeleton.ChangeHealth(-1);          // Decrease health
+      }
     }
   }
+
   // update bounding rectangle
   boundingRectangle.setPosition(sprite.getPosition());
 }
