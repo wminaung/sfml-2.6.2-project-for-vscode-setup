@@ -1,0 +1,12 @@
+{
+  "name": "sfml-2.6.2-project-for-vscode-setup",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "bash build-run.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

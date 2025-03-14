@@ -1,0 +1,10 @@
+build
+out
+.cache
+.idea
+.vs
+
+*.exe
+
+dependencies/SFML
+build/
