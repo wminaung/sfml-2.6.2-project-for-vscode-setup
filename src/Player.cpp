@@ -2,9 +2,7 @@
 #include "Math.h"
 #include <iostream>
 
-Player::Player()
-    : bulletSpeed(0.5f), playerSpeed(1.0f), maxFireRate(150.f),
-      fireRateTimer(0.f) {}
+Player::Player() : playerSpeed(1.0f), maxFireRate(150.f), fireRateTimer(0.f) {}
 
 Player::~Player() {}
 
@@ -64,20 +62,28 @@ void Player::Update(float deltaTime, Skeleton &skeleton,
   if ((sf::Mouse::isButtonPressed(sf::Mouse::Left) ||
        sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) &&
       fireRateTimer >= maxFireRate) {
-    bullets.push_back(sf::RectangleShape(sf::Vector2f(40, 20)));
-    bullets[bullets.size() - 1].setPosition(sprite.getPosition());
+    bullets.push_back(Bullet());
+
+    // ! check
+    Bullet &bullet = bullets[bullets.size() - 1];
+
+    bullet.Initialize(sprite.getPosition(), mousePosition, 0.5f);
+
     fireRateTimer = 0.f;
   }
 
   for (size_t i = bullets.size(); i-- > 0;) { // Start from the last element
     // Move bullet
+
+    bullets[i].Update(deltaTime);
+
     if (skeleton.health > 0) {
-      sf::Vector2f bulletDirection =
-          sf::Vector2f(mousePosition) - bullets[i].getPosition();
-      bulletDirection = Math::NormalizeVector(bulletDirection);
-      bullets[i].setPosition(bullets[i].getPosition() +
-                             bulletDirection * bulletSpeed * deltaTime);
-      if (Math::DidRectCollide(bullets[i].getGlobalBounds(),
+      // sf::Vector2f bulletDirection =
+      //     sf::Vector2f(mousePosition) - bullets[i].getPosition();
+      // bulletDirection = Math::NormalizeVector(bulletDirection);
+      // bullets[i].setPosition(bullets[i].getPosition() +
+      //                        bulletDirection * bulletSpeed * deltaTime);
+      if (Math::DidRectCollide(bullets[i].GetBlobalBounds(),
                                skeleton.sprite.getGlobalBounds())) {
         bullets.erase(bullets.begin() + i); // Remove the bullet
         skeleton.ChangeHealth(-1);          // Decrease health
@@ -85,7 +91,7 @@ void Player::Update(float deltaTime, Skeleton &skeleton,
     }
   }
 
-  // update bounding rectangle
+  // update bounding rectanglej
   boundingRectangle.setPosition(sprite.getPosition());
 }
 
@@ -93,6 +99,6 @@ void Player::Draw(sf::RenderWindow &window) {
   window.draw(sprite);
   window.draw(boundingRectangle);
   for (size_t i = 0; i < bullets.size(); i++) {
-    window.draw(bullets[i]);
+    bullets[i].Draw(window);
   }
 }

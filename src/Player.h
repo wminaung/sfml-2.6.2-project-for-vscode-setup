@@ -1,14 +1,16 @@
 #pragma once
+#include "Bullet.h"
 #include "Skeleton.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
 
+
 class Player {
 private:
   sf::Texture texture;
-  std::vector<sf::RectangleShape> bullets;
-  float bulletSpeed;
+  std::vector<Bullet> bullets;
+  // float bulletSpeed;
   float maxFireRate;
   float fireRateTimer;
 
