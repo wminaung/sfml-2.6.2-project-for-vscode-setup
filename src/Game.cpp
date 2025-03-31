@@ -8,6 +8,18 @@ void Game::initWindow() {
   videoMode.width = 800;
   this->window = new sf::RenderWindow(videoMode, "My Game",
                                       sf::Style::Titlebar | sf::Style::Close);
+
+  this->window->setFramerateLimit(60);
+}
+
+void Game::initEnemies() {
+  //
+  this->enemy.setPosition(10.f, 10.f);
+  this->enemy.setSize(sf::Vector2f(100.f, 100.f));
+  this->enemy.setScale(2.f, 1.f);
+  this->enemy.setFillColor(sf::Color::Cyan);
+  this->enemy.setOutlineColor(sf::Color::Green);
+  this->enemy.setOutlineThickness(3.f);
 }
 
 // Constructor
@@ -15,6 +27,7 @@ Game::Game(/* args */) {
   //
   this->initVariable();
   this->initWindow();
+  this->initEnemies();
 }
 
 // Destructor
@@ -54,6 +67,15 @@ void Game::pollEvents() {
 void Game::update() {
   // Game Update
   this->pollEvents();
+
+  // window relative
+  std::cout << "Mouse pos: " << sf::Mouse::getPosition().x << ", "
+            << sf::Mouse::getPosition().y << std::endl;
+
+  // view relative
+  this->pollEvents();
+  std::cout << "Mouse pos: " << sf::Mouse::getPosition(*this->window).x << ", "
+            << sf::Mouse::getPosition(*this->window).y << std::endl;
 }
 
 void Game::render() {
@@ -64,6 +86,10 @@ void Game::render() {
     - display frame in window
     Renders the game object
   */
-  this->window->clear(sf::Color(255, 0, 0, 255));
+  this->window->clear();
+
+  // Draw game Objects
+  this->window->draw(this->enemy);
+
   this->window->display();
 }
