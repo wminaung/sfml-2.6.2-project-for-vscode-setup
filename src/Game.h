@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 
 /*
     Class that acts as engine
@@ -14,7 +15,12 @@ private:
   sf::Event ev;
   sf::VideoMode videoMode;
 
+  // Mouse positions
+
+  sf::Vector2i mousePosWindow;
+
   // Game Objects
+  std::vector<sf::RectangleShape> enemies;
   sf::RectangleShape enemy;
 
   // Private function
@@ -30,7 +36,9 @@ public:
   const bool running() const;
 
   // Functions
+
   void pollEvents();
+  void updateMousePosition();
   void update();
   void render();
 };
