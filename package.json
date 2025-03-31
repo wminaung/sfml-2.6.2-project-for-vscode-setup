@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "bash build-run.sh"
+    "start": "bash build-run.sh",
+    "test": "bash  build-run.sh"
   },
-  "keywords": [],
+  "keywords": ["sfml", "c++", "vscode"],
+
   "author": "",
   "license": "ISC",
   "description": ""
