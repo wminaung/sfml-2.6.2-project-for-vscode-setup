@@ -14,13 +14,13 @@ copy_if_not_exists() {
 }
 
 # Copy required DLLs only if they don't exist
-copy_if_not_exists "dependencies/SFML/bin/sfml-graphics-2.dll"
-copy_if_not_exists "dependencies/SFML/bin/sfml-window-2.dll"
-copy_if_not_exists "dependencies/SFML/bin/sfml-system-2.dll"
+copy_if_not_exists "dependencies/SFML/bin/sfml-graphics-d-2.dll"
+copy_if_not_exists "dependencies/SFML/bin/sfml-window-d-2.dll"
+copy_if_not_exists "dependencies/SFML/bin/sfml-system-d-2.dll"
 
-
-# Compiles
-g++ -g src/*.cpp -o build/main.exe -I dependencies/SFML/include -L dependencies/SFML/bin -lsfml-graphics-2 -lsfml-window-2 -lsfml-system-2 
+# Compile
+# g++ -g src/*.cpp -o build/main.exe -I dependencies/SFML/include -L dependencies/SFML/lib  -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
+g++ -g src/*.cpp -o build/main.exe -I dependencies/SFML/include -L build  -lsfml-graphics-d-2 -lsfml-window-d-2 -lsfml-system-d-2
 
 # Check if compilation was successful
 if [ $? -eq 0 ]; then

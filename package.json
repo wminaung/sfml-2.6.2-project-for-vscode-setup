@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "bash build-run.sh",
-    "test": "bash  build-run.sh"
+    "test": "bash build-dev.sh",
+    "debug": "bash debug.sh"
   },
   "keywords": ["sfml", "c++", "vscode"],
 
