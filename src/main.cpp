@@ -10,13 +10,14 @@ void Draw(RenderWindow &window, RectangleShape &square);
 int main() {
   int keyTime = 8;
 
-  RenderWindow window(VideoMode(800, 600), "Simple Square Swag",
+  RenderWindow window(VideoMode(800, 600), "Simple shoot the target",
                       Style::Default);
   window.setFramerateLimit(144);
 
-  RectangleShape square(Vector2f(100.f, 100.f));
-  square.setFillColor(Color::Red);
-  square.setPosition(window.getSize().x / 2, window.getSize().y / 2);
+  CircleShape hoop;
+  hoop.setFillColor(Color::Black);
+  CircleShape ball;
+
   ///////
   Event event;
   while (window.isOpen()) {
@@ -32,10 +33,13 @@ int main() {
       }
     }
     /////////////////////////
+    window.clear(Color::White);
 
+    // Draw stuff
+    window.draw(hoop);
+    window.display();
     /////////////
-    Update(square, window);
-    Draw(window, square);
+
     // end game loop
   }
   return 0;
