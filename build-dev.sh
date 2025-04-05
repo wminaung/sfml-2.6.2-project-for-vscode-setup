@@ -4,23 +4,10 @@
 mkdir -p build
 
 # Function to copy file only if it doesn't exist in build directory
-copy_if_not_exists() {
-    if [ ! -f "build/$(basename "$1")" ]; then
-        cp "$1" build/
-        echo "Copied $(basename "$1")"
-    else
-        echo "$(basename "$1") already exists, skipping..."
-    fi
-}
-
-# Copy required DLLs only if they don't exist
-copy_if_not_exists "dependencies/SFML/bin/sfml-graphics-d-2.dll"
-copy_if_not_exists "dependencies/SFML/bin/sfml-window-d-2.dll"
-copy_if_not_exists "dependencies/SFML/bin/sfml-system-d-2.dll"
 
 # Compile
 # g++ -g src/*.cpp -o build/main.exe -I dependencies/SFML/include -L dependencies/SFML/lib  -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
-g++ -g src/*.cpp -o build/main.exe -I dependencies/SFML/include -L build  -lsfml-graphics-d-2 -lsfml-window-d-2 -lsfml-system-d-2
+g++ -g src/*.cpp -o build/main.exe
 
 # Check if compilation was successful
 if [ $? -eq 0 ]; then
