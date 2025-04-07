@@ -1,4 +1,5 @@
 #include "FrameRate.h"
+#include "Map.h"
 #include "Player.h"
 #include "Skeleton.h"
 #include <SFML/Graphics.hpp>
@@ -27,13 +28,17 @@ int main() {
   FrameRate frameRate;
   Player player;
   Skeleton skeleton;
+  Map map;
   frameRate.Initialize();
+  map.Initialize();
   player.Initialize();
   skeleton.Initialize();
+
   //------------ Initialize ------------
   //------------ Load ------------
 
   frameRate.Load();
+  map.Load();
   player.Load();
   skeleton.Load();
   //------------ Load ------------
@@ -54,6 +59,7 @@ int main() {
 
     double deltaTime = time.asMicroseconds() / 1000.0;
     frameRate.Update(deltaTime);
+    map.Update(deltaTime);
     player.Update(deltaTime, skeleton, mousePosition);
     skeleton.Update(deltaTime);
 
@@ -61,6 +67,8 @@ int main() {
 
     /* --------- DRAW --------- */
     window.clear(sf::Color::Black);
+
+    map.Draw(window);
     skeleton.Draw(window);
     player.Draw(window);
     frameRate.Draw(window);
