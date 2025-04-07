@@ -19,12 +19,23 @@ EXEC = $(BUILD_DIR)/main.exe
 # SFML DLLs to copy
 DLLS = $(DEPS_DIR)/bin/sfml-graphics-2.dll $(DEPS_DIR)/bin/sfml-window-2.dll $(DEPS_DIR)/bin/sfml-system-2.dll
 
-$(EXEC): $(SOURCES)
-	@mkdir -p $(BUILD_DIR)               
+default: 
+	@echo "Available targets:" 
+	@echo "    build"
+	@echo "    run"
+	@echo "    clean"
+
+
+build:
+	@echo "Building..."
+	$(MAKE) $(EXEC)
+	@echo "Building complete!"
+
+
+$(EXEC): $(SOURCES)    
 	$(MAKE) copy_dlls                      
 	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(EXEC) $(INCLUDES) $(LDFLAGS) $(LIBS)
 	@echo "Compilation successful!"
-	
 	
 
 # Rule to copy SFML DLLs into the build directory
@@ -49,4 +60,4 @@ clean:
 	@echo "Cleaning up..."
 	rm -rf $(BUILD_DIR)
 
-.PHONY: run clean copy_dlls
+.PHONY: run clean copy_dlls build
